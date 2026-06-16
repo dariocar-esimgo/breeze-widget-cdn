@@ -227,28 +227,7 @@
   <!-- CONFIG RAIL -->
   <aside class="rail">
     <div class="group">
-      <h2><span class="idx">01</span> Connection</h2>
-      <p class="hint">Paste your Breeze Affiliate API key. The store loads live products, prices and coverage from it.</p>
-      <div class="row">
-        <label for="cfg-key">Breeze API key</label>
-        <div class="keywrap">
-          <input id="cfg-key" class="inp mono" type="password" placeholder="sk_live_…" spellcheck="false" />
-          <button class="reveal" id="keyReveal" type="button">show</button>
-        </div>
-        <button class="test-btn" id="testBtn" type="button" disabled>Test connection</button>
-        <div class="status-block">
-          <div class="head"><span class="dot" id="dataDot"></span><span id="dataStatus">Awaiting API key</span></div>
-          <div class="detail" id="dataDetail">Showing demo data in the preview. Add your key and click Test connection.</div>
-        </div>
-      </div>
-      <div class="row" style="margin-top:14px">
-        <label for="cfg-proxy">Proxy URL <span style="text-transform:none;color:var(--muted-2);font-weight:400">(optional, for production)</span></label>
-        <input id="cfg-proxy" class="inp mono" placeholder="https://your-proxy.workers.dev" spellcheck="false" />
-      </div>
-    </div>
-
-    <div class="group">
-      <h2><span class="idx">02</span> Tracking</h2>
+      <h2><span class="idx">01</span> Tracking</h2>
       <p class="hint">Your SCA ref / affiliate code is appended to every clickout as <code>?sca_ref=</code> so every sale is attributed to you.</p>
       <div class="row">
         <label for="cfg-ref">SCA ref code</label>
@@ -257,7 +236,7 @@
     </div>
 
     <div class="group">
-      <h2><span class="idx">03</span> Brand</h2>
+      <h2><span class="idx">02</span> Brand</h2>
       <p class="hint">Your name and logo sit at the top of the store.</p>
       <div class="row">
         <label for="cfg-brand">Store name</label>
@@ -278,7 +257,7 @@
     </div>
 
     <div class="group">
-      <h2><span class="idx">04</span> Colours</h2>
+      <h2><span class="idx">03</span> Colours</h2>
       <p class="hint">Three brand colours drive the whole store theme.</p>
       <div class="swatches">
         <div class="swatch">
@@ -297,7 +276,7 @@
     </div>
 
     <div class="group">
-      <h2><span class="idx">05</span> Store defaults</h2>
+      <h2><span class="idx">04</span> Store defaults</h2>
       <div class="row">
         <label for="cfg-cur">Default currency</label>
         <select id="cfg-cur"></select>
@@ -357,8 +336,6 @@
     </div>
     <div class="modal-tabs" id="modalTabs">
       <button data-tab="embed" class="on">Embed code</button>
-      <button data-tab="proxy">Proxy setup</button>
-      <button data-tab="quick">Quick test</button>
     </div>
     <div class="modal-body">
 
@@ -375,98 +352,10 @@
           <div class="codebox"><button class="copy" data-target="codeSide">Copy</button><pre id="codeSide"></pre></div>
         </div>
         <div class="secnote">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" stroke="#e0a93b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><b>If you haven't set a Proxy URL:</b> the snippet carries your API key in client-side code — anyone viewing source can read it. Fine for testing on a single page; for production, use the <b>Proxy setup</b> tab to deploy a free Cloudflare Worker that keeps your key server-side.</div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="#e0a93b" stroke-width="1.8" stroke-linejoin="round"/></svg>
+          <div>No API key goes in this snippet — it loads the Breeze-hosted widget, so there's nothing to expose. On <b>WordPress</b>, paste it into the free <b>Custom HTML block</b> (not the classic editor, which mangles scripts). The store shows sample plans until your account is connected to live data.</div>
         </div>
       </div>
-
-      <!-- TAB: PROXY -->
-      <div class="tab-pane" data-pane="proxy">
-        <p style="font-size:13px;color:var(--muted);margin:0 0 18px;line-height:1.55;font-weight:300">A proxy is a tiny one-file server that holds your API key and forwards browser requests to Breeze. This solves CORS (the reason a raw API key won't fetch from a browser) and keeps your key invisible to site visitors. Pick a host below — both are free.</p>
-
-        <div class="host-seg" id="hostSeg">
-          <button data-host="vercel" class="on">Vercel <span class="rec">recommended</span></button>
-          <button data-host="cloudflare">Cloudflare Workers</button>
-        </div>
-
-        <!-- VERCEL -->
-        <div class="host-pane on" data-host-pane="vercel">
-          <p style="font-size:12.5px;color:var(--muted);margin:0 0 18px;line-height:1.55;font-weight:300">Vercel's deploy flow is currently the simplest paste-and-go setup. No CLI, no Git required, no greyed-out buttons. About 3 minutes start to finish.</p>
-          <div class="step"><div class="n">1</div><div class="b">
-            <h5>Sign in to Vercel</h5>
-            <p>Go to <a class="ext" href="https://vercel.com/signup" target="_blank" rel="noopener">vercel.com/signup</a> and sign up — easiest with GitHub, Google, or email. Free tier is plenty.</p>
-          </div></div>
-          <div class="step"><div class="n">2</div><div class="b">
-            <h5>Create a new project from a template</h5>
-            <p>From your dashboard click <b>Add New → Project</b>, then <b>Browse Templates</b>, and pick the <b>Other</b> category → <b>Next.js</b> (or any starter — we'll replace the code). Or skip templates: click <b>Add New → Project → Continue with empty repository</b>. Name it <code>breeze-proxy</code> and create it.</p>
-          </div></div>
-          <div class="step"><div class="n">3</div><div class="b">
-            <h5>Add the proxy file</h5>
-            <p>In the Vercel editor (or the GitHub repo it created), make a new file at <code>api/v1/products.js</code> and paste the code below. Replace <code>YOUR_BREEZE_API_KEY_HERE</code> with your real key.</p>
-            <div class="codebox" style="margin-top:8px"><button class="copy" data-target="codeVercel">Copy</button><pre id="codeVercel"></pre></div>
-          </div></div>
-          <div class="step"><div class="n">4</div><div class="b">
-            <h5>Add the key as an environment variable (safer)</h5>
-            <p>In your Vercel project: <b>Settings → Environment Variables</b> → add <code>BREEZE_API_KEY</code> with your key as the value. The code reads from <code>process.env.BREEZE_API_KEY</code> first and falls back to the inline string, so doing this means your key never lives in the source file.</p>
-          </div></div>
-          <div class="step"><div class="n">5</div><div class="b">
-            <h5>Deploy and copy the URL</h5>
-            <p>Click <b>Deploy</b>. Vercel gives you a URL like <code>https://breeze-proxy-<i>yourname</i>.vercel.app</code>. Paste that into the <b>Proxy URL</b> field in the left rail and you're done — preview goes live and the embed snippet no longer contains your key.</p>
-          </div></div>
-          <div class="secnote">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="#e0a93b" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            <div><b>For production:</b> uncomment the <code>ALLOWED_ORIGINS</code> block in the code and add your website's domain so random sites can't use your proxy to hammer the Breeze API on your bill.</div>
-          </div>
-        </div>
-
-        <!-- CLOUDFLARE -->
-        <div class="host-pane" data-host-pane="cloudflare">
-          <p style="font-size:12.5px;color:var(--muted);margin:0 0 18px;line-height:1.55;font-weight:300">Cloudflare's dashboard currently hides the "paste code" option for new accounts. Use the Playground route below, which bypasses the greyed-out dashboard entirely.</p>
-          <div class="step"><div class="n">1</div><div class="b">
-            <h5>Open the Workers Playground</h5>
-            <p>Go to <a class="ext" href="https://workers.cloudflare.com/playground" target="_blank" rel="noopener">workers.cloudflare.com/playground</a>. No signup needed yet.</p>
-          </div></div>
-          <div class="step"><div class="n">2</div><div class="b">
-            <h5>Paste the Worker code</h5>
-            <p>Delete the example, paste the code below, and replace <code>YOUR_BREEZE_API_KEY_HERE</code> with your real key.</p>
-            <div class="codebox" style="margin-top:8px"><button class="copy" data-target="codeWorker">Copy</button><pre id="codeWorker"></pre></div>
-          </div></div>
-          <div class="step"><div class="n">3</div><div class="b">
-            <h5>Deploy</h5>
-            <p>Click <b>Deploy</b> at the top right. You'll be prompted to sign in / sign up and pick a subdomain (e.g. <code>yourname.workers.dev</code>). This is the only place that step happens — the dashboard's broken flow doesn't get touched.</p>
-          </div></div>
-          <div class="step"><div class="n">4</div><div class="b">
-            <h5>Copy the Worker URL</h5>
-            <p>You'll get a URL like <code>https://breeze-proxy.<i>yourname</i>.workers.dev</code>. Paste it into the <b>Proxy URL</b> field in the left rail.</p>
-          </div></div>
-          <div class="secnote">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" stroke="#e0a93b" stroke-width="1.8" stroke-linejoin="round"/></svg>
-            <div><b>For production:</b> uncomment the <code>ALLOWED_ORIGINS</code> block in the Worker code and edit it to your website's domain.</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB: QUICK TEST -->
-      <div class="tab-pane" data-pane="quick">
-        <p style="font-size:13px;color:var(--muted);margin:0 0 18px;line-height:1.55;font-weight:300">Want to verify your API key works <i>right now</i> without deploying anything? Pick one of these. None are for production.</p>
-        <div class="step"><div class="n">A</div><div class="b">
-          <h5>Test inside the portal</h5>
-          <p>Paste your key into the left rail and click <b>Test connection</b>. The portal calls the Breeze API directly. If CORS blocks the browser, you'll see "CORS blocked" — meaning the key is probably fine but you'll need a proxy to use it from a browser.</p>
-        </div></div>
-        <div class="step"><div class="n">B</div><div class="b">
-          <h5>Test from your terminal</h5>
-          <p>This is the cleanest proof the key itself works. Run in any terminal:</p>
-          <div class="codebox" style="margin-top:8px"><button class="copy" data-target="codeCurl">Copy</button><pre id="codeCurl"></pre></div>
-          <p style="margin-top:8px">A 200 response with a <code>products</code> array means your key is valid — any browser issue is purely CORS, which the proxy solves.</p>
-        </div></div>
-        <div class="step"><div class="n">C</div><div class="b">
-          <h5>Local-only: launch Chrome with CORS disabled</h5>
-          <p>Lets you preview the live API in this portal without deploying a proxy. Treat this as a dev-only trick.</p>
-          <div class="codebox" style="margin-top:8px"><button class="copy" data-target="codeChrome">Copy</button><pre id="codeChrome"></pre></div>
-          <p style="margin-top:8px;color:var(--coral)"><b>Do not browse the web in this window.</b> Use it only to load the portal, verify your key, then close it.</p>
-        </div></div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -793,74 +682,15 @@ function BreezeWidget(cfg){
   var CURS=["USD","EUR","GBP","AUD","CAD","JPY","AED","THB","SGD","INR","CHF","SEK","NOK","DKK","HKD","NZD","KRW","CNY","PLN","ZAR","BRL"];
   $("cfg-cur").innerHTML=CURS.map(function(c){return '<option value="'+c+'"'+(c==="USD"?" selected":"")+'>'+c+'</option>';}).join("");
 
-  /* status messages */
-  function setStatus(source,count,reason){
-    var dot=$("dataDot"),head=$("dataStatus"),det=$("dataDetail");
-    if(source==="live"){
-      dot.className="dot live";
-      head.textContent="Live data — "+count+" plans loaded";
-      det.textContent=cfg.proxyUrl?"Via your proxy. Production-ready.":"Direct from api.breezesim.com.";
-    }else{
-      dot.className="dot demo";
-      head.textContent="Demo data";
-      if(reason==="no-key")det.textContent="Showing sample plans in the preview. Add your key and click Test connection.";
-      else if(reason&&reason.indexOf("Failed to fetch")>-1)det.textContent="Browser blocked the request (CORS). Your key may still be fine — see Quick test, or set up a Proxy URL.";
-      else if(reason&&reason.indexOf("HTTP 401")>-1)det.textContent="Key rejected (HTTP 401). Double-check it in the Breeze affiliate dashboard.";
-      else if(reason&&reason.indexOf("HTTP 403")>-1)det.textContent="Forbidden (HTTP 403). Your key may not have product access yet.";
-      else if(reason&&reason.indexOf("HTTP")>-1)det.textContent="API returned "+reason+". Retry, or check the Breeze status page.";
-      else det.textContent="Couldn't reach the API. Showing demo data. Reason: "+(reason||"unknown");
-    }
-  }
-
-  /* TEST CONNECTION button */
-  $("testBtn").addEventListener("click",function(){
-    var btn=$("testBtn"),dot=$("dataDot"),head=$("dataStatus"),det=$("dataDetail");
-    btn.disabled=true;btn.textContent="Testing…";
-    dot.className="dot test";head.textContent="Testing connection…";det.textContent="Calling the Breeze API right now.";
-    var base=cfg.proxyUrl?cfg.proxyUrl.replace(/\/$/,"")+"/v1/products":"https://api.breezesim.com/v1/products";
-    var headers=cfg.proxyUrl?{}:{Authorization:cfg.apiKey};
-    fetch(base+"?limit=1",{headers:headers})
-      .then(function(r){
-        if(!r.ok)throw new Error("HTTP "+r.status);
-        return r.json();
-      })
-      .then(function(j){
-        var total=(j&&j.pagination&&j.pagination.totalItems)||((j&&j.products&&j.products.length)||0);
-        dot.className="dot live";head.textContent="\u2713 Key is working";
-        det.textContent="API responded with "+total+" total plans. The preview is now live.";
-        if(window.__breezeCache)window.__breezeCache={};
-        render();
-      })
-      .catch(function(err){
-        var msg=String(err&&err.message||err);
-        dot.className="dot err";
-        if(msg.indexOf("Failed to fetch")>-1||msg.indexOf("NetworkError")>-1){
-          head.textContent="CORS blocked the request";
-          det.textContent="The browser blocked the response. Your key is probably valid — verify with the curl command in 'Get embed code' → Quick test → option B. To use the API in a browser, set up the proxy (option in the same dialog).";
-        }else if(msg.indexOf("HTTP 401")>-1){
-          head.textContent="\u2717 Key rejected (HTTP 401)";
-          det.textContent="The API didn't recognise this key. Check for stray spaces, or regenerate it in the Breeze affiliate dashboard.";
-        }else if(msg.indexOf("HTTP 403")>-1){
-          head.textContent="\u2717 Forbidden (HTTP 403)";
-          det.textContent="The key authenticated but doesn't have product access. Contact Breeze to enable the affiliate API on your account.";
-        }else{
-          head.textContent="\u2717 Connection failed";
-          det.textContent=msg;
-        }
-      })
-      .then(function(){btn.disabled=false;btn.textContent="Test connection";});
-  });
-
   /* debounced preview render */
   var t;
   function schedule(){clearTimeout(t);t=setTimeout(render,140);}
   function render(){
     if($("console").style.display==="none")return;
     var base={
-      apiKey:cfg.apiKey,proxyUrl:cfg.proxyUrl,scaRef:cfg.scaRef,brandName:cfg.brandName,logoUrl:cfg.logoUrl,
+      scaRef:cfg.scaRef,brandName:cfg.brandName,logoUrl:cfg.logoUrl,
       primary:cfg.primary,secondary:cfg.secondary,accent:cfg.accent,
-      defaultCurrency:cfg.defaultCurrency,ctaLabel:cfg.ctaLabel,
-      onSource:setStatus
+      defaultCurrency:cfg.defaultCurrency,ctaLabel:cfg.ctaLabel
     };
     BreezeWidget(Object.assign({},base,{layout:"full",mountId:"breeze-store-preview"}));
     BreezeWidget(Object.assign({},base,{layout:"side",mountId:"breeze-store-preview-side"}));
@@ -871,22 +701,12 @@ function BreezeWidget(cfg){
     $(id).addEventListener("input",function(){
       cfg[key]=$(id).value.trim();
       if(reset&&window.__breezeCache)window.__breezeCache={};
-      if(key==="apiKey"||key==="proxyUrl"){
-        $("testBtn").disabled=!cfg.apiKey&&!cfg.proxyUrl;
-      }
       schedule();
     });
   }
-  bindText("cfg-key","apiKey",true);
-  bindText("cfg-proxy","proxyUrl",true);
   bindText("cfg-ref","scaRef",false);
   bindText("cfg-brand","brandName",false);
   bindText("cfg-cta","ctaLabel",false);
-
-  $("keyReveal").addEventListener("click",function(){
-    var f=$("cfg-key"),show=f.type==="password";
-    f.type=show?"text":"password";this.textContent=show?"hide":"show";
-  });
 
   function setLogo(url){
     cfg.logoUrl=url;
@@ -946,124 +766,9 @@ function BreezeWidget(cfg){
       +'<script async src="'+EMBED_SRC+'"><\/script>';
   }
 
-  /* Worker code */
-  var VERCEL_CODE = [
-    "// Breeze API proxy — Vercel Serverless Function",
-    "// File path: api/v1/products.js",
-    "// Holds your API key server-side and forwards requests to Breeze.",
-    "",
-    "const BREEZE_API_KEY = process.env.BREEZE_API_KEY || \"YOUR_BREEZE_API_KEY_HERE\";",
-    "const BREEZE_API_BASE = \"https://api.breezesim.com\";",
-    "",
-    "// Optional: restrict which sites can call this proxy.",
-    "// Uncomment and edit for production.",
-    "// const ALLOWED_ORIGINS = [\"https://yourbrand.com\", \"https://www.yourbrand.com\"];",
-    "",
-    "export default async function handler(req, res) {",
-    "  const origin = req.headers.origin || \"*\";",
-    "",
-    "  // if (typeof ALLOWED_ORIGINS !== \"undefined\" && !ALLOWED_ORIGINS.includes(origin)) {",
-    "  //   return res.status(403).send(\"Forbidden\");",
-    "  // }",
-    "",
-    "  res.setHeader(\"Access-Control-Allow-Origin\", origin);",
-    "  res.setHeader(\"Access-Control-Allow-Methods\", \"GET, OPTIONS\");",
-    "  res.setHeader(\"Access-Control-Allow-Headers\", \"Content-Type\");",
-    "  res.setHeader(\"Access-Control-Max-Age\", \"86400\");",
-    "",
-    "  if (req.method === \"OPTIONS\") {",
-    "    return res.status(204).end();",
-    "  }",
-    "",
-    "  // Forward the query string (limit, currentPage, sortBy, etc.) to Breeze",
-    "  const qs = req.url.includes(\"?\") ? req.url.slice(req.url.indexOf(\"?\")) : \"\";",
-    "  const target = BREEZE_API_BASE + \"/v1/products\" + qs;",
-    "",
-    "  try {",
-    "    const upstream = await fetch(target, {",
-    "      method: \"GET\",",
-    "      headers: { \"Authorization\": BREEZE_API_KEY },",
-    "    });",
-    "    const body = await upstream.text();",
-    "    res.setHeader(\"Content-Type\", upstream.headers.get(\"Content-Type\") || \"application/json\");",
-    "    res.setHeader(\"Cache-Control\", \"public, max-age=300\");",
-    "    return res.status(upstream.status).send(body);",
-    "  } catch (err) {",
-    "    return res.status(502).json({ err: String(err) });",
-    "  }",
-    "}"
-  ].join("\n");
-
-  var WORKER_CODE = [
-    "// Breeze API proxy — Cloudflare Worker",
-    "// Holds your API key server-side and forwards requests to Breeze.",
-    "",
-    "const BREEZE_API_KEY = \"YOUR_BREEZE_API_KEY_HERE\";",
-    "const BREEZE_API_BASE = \"https://api.breezesim.com\";",
-    "",
-    "// Optional: restrict which sites can call this proxy.",
-    "// Uncomment and edit for production.",
-    "// const ALLOWED_ORIGINS = [\"https://yourbrand.com\", \"https://www.yourbrand.com\"];",
-    "",
-    "export default {",
-    "  async fetch(request) {",
-    "    const origin = request.headers.get(\"Origin\") || \"*\";",
-    "    // if (ALLOWED_ORIGINS && !ALLOWED_ORIGINS.includes(origin)) {",
-    "    //   return new Response(\"Forbidden\", { status: 403 });",
-    "    // }",
-    "",
-    "    const corsHeaders = {",
-    "      \"Access-Control-Allow-Origin\": origin,",
-    "      \"Access-Control-Allow-Methods\": \"GET, OPTIONS\",",
-    "      \"Access-Control-Allow-Headers\": \"Content-Type\",",
-    "      \"Access-Control-Max-Age\": \"86400\",",
-    "    };",
-    "",
-    "    if (request.method === \"OPTIONS\") {",
-    "      return new Response(null, { status: 204, headers: corsHeaders });",
-    "    }",
-    "",
-    "    const url = new URL(request.url);",
-    "    const target = BREEZE_API_BASE + url.pathname + url.search;",
-    "",
-    "    const upstream = await fetch(target, {",
-    "      method: \"GET\",",
-    "      headers: { \"Authorization\": BREEZE_API_KEY },",
-    "    });",
-    "",
-    "    const body = await upstream.text();",
-    "    return new Response(body, {",
-    "      status: upstream.status,",
-    "      headers: {",
-    "        ...corsHeaders,",
-    "        \"Content-Type\": upstream.headers.get(\"Content-Type\") || \"application/json\",",
-    "        \"Cache-Control\": \"public, max-age=300\",",
-    "      },",
-    "    });",
-    "  },",
-    "};"
-  ].join("\n");
-
-  var CURL_CODE = "curl -H \"Authorization: YOUR_BREEZE_API_KEY\" \\\n     \"https://api.breezesim.com/v1/products?limit=1\"";
-
-  var CHROME_CMD = [
-    "# macOS",
-    "open -na \"Google Chrome\" --args --user-data-dir=/tmp/cors-chrome --disable-web-security",
-    "",
-    "# Windows (PowerShell)",
-    "& \"C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\" --user-data-dir=\"C:\\tmp\\cors-chrome\" --disable-web-security",
-    "",
-    "# Linux",
-    "google-chrome --user-data-dir=/tmp/cors-chrome --disable-web-security"
-  ].join("\n");
-
   $("openCode").addEventListener("click",function(){
     $("codeFull").textContent=genSnippet("full");
     $("codeSide").textContent=genSnippet("side");
-    $("codeVercel").textContent=VERCEL_CODE;
-    $("codeWorker").textContent=WORKER_CODE;
-    $("codeCurl").textContent=CURL_CODE;
-    $("codeChrome").textContent=CHROME_CMD;
     $("codeModal").style.display="flex";
   });
   $("closeCode").addEventListener("click",function(){$("codeModal").style.display="none";});
@@ -1080,18 +785,7 @@ function BreezeWidget(cfg){
     });
   });
 
-  /* host picker inside the proxy tab */
-  $("hostSeg").addEventListener("click",function(e){
-    var b=e.target.closest("button[data-host]");if(!b)return;
-    this.querySelectorAll("button").forEach(function(x){x.classList.remove("on");});
-    b.classList.add("on");
-    var host=b.getAttribute("data-host");
-    document.querySelectorAll(".host-pane").forEach(function(p){
-      p.classList.toggle("on",p.getAttribute("data-host-pane")===host);
-    });
-  });
-
-  /* copy buttons (delegated since they're inside multiple panes) */
+  /* copy buttons (delegated) */
   document.addEventListener("click",function(e){
     var btn=e.target.closest(".copy");if(!btn)return;
     var txt=$(btn.getAttribute("data-target")).textContent;
