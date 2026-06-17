@@ -12,9 +12,9 @@
  * same embed shows the live catalogue — partners change nothing.
  * ========================================================================== */
 (function () {
-  // Set this once the Breeze proxy is deployed (e.g. "https://widgets.breezesim.com").
-  // Left empty -> widget shows demo plans.
-  var CENTRAL_PROXY = "";
+  // Breeze-hosted proxy (Go Go Go Cloudflare account). Holds the affiliate key
+  // server-side; widgets with a valid token + allowed origin get the live catalogue.
+  var CENTRAL_PROXY = "https://breeze-widget-proxy.go-go-go.workers.dev";
 
 function BreezeWidget(cfg){
   "use strict";
